@@ -1,11 +1,12 @@
 local osys = require("cmake-tools.osys")
 local utils = require("cmake-tools.utils")
+local log = require("cmake-tools.log")
 
 local session = {
   dir = {
-    unix = vim.fn.expand("~") .. "/.cache/cmake_tools_nvim/",
-    mac = vim.fn.expand("~") .. "/.cache/cmake_tools_nvim/",
-    win = vim.fn.expand("~") .. "/AppData/Local/cmake_tools_nvim/",
+    unix = vim.loop.cwd() .. "/.nvim/",
+    mac = vim.loop.cwd() .. "/.nvim/",
+    win = vim.loop.cwd() .. "/.nvim/",
   },
 }
 
@@ -24,11 +25,7 @@ local function get_cache_path()
 end
 
 local function get_current_path()
-  local current_path = vim.loop.cwd()
-  local clean_path = current_path:gsub("/", "")
-  clean_path = clean_path:gsub("\\", "")
-  clean_path = clean_path:gsub(":", "")
-  return get_cache_path() .. clean_path .. ".lua"
+  return get_cache_path() .. "nvim-cmake-session.lua"
 end
 
 local function init_cache()
